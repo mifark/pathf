@@ -6,11 +6,14 @@
 #include <QList>
 #include <QMap>
 #include <QFile>
+#include <QTextStream>
 
 enum mapElements{
-    freespace,
-    wall,
-    empty
+    passable = 0,
+    trees,
+    swamp,
+    water,
+    outOfBounds
 };
 
 class maploader : public QObject
@@ -21,14 +24,17 @@ public:
     virtual ~maploader();
     void loadFirst();
     void makeMapSymbols();
-    QList<QList<QPoint> > getMap();
+    QList<QList<int> > getMap();
 
 private:
-    QMap<mapElements,QString> mapSymbols;
+    QMultiMap<mapElements,QString> mapSymbols;
     QDir maps;
     QFile *current;
-    QList<QList<QPoint> > readedMap;
-    
+    QList<QList<int> > readedMap;
+    int mapHeight;
+    int mapWidth;
+
+    void processMap(QTextStream &str);
     
 
 signals:

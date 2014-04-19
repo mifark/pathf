@@ -6,6 +6,8 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsRectItem>
 
+#include "maploader.h"
+
 #define GRID_SIZE 15
 enum cellTypes{
     empty = 0,
@@ -19,6 +21,7 @@ class UniverseScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit UniverseScene(QObject *parent = 0);
+    virtual ~UniverseScene();
     void createGrid(int width, int height);
     
 protected:
@@ -37,6 +40,8 @@ private:
     int pickColor(cellTypes tp);
 
     int searchRect(QRectF rct);
+
+    maploader *mpl;
     
 signals:
     

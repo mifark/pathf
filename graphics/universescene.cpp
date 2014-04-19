@@ -4,6 +4,13 @@
 UniverseScene::UniverseScene(QObject *parent) :
     QGraphicsScene(parent)
 {
+    mpl = new maploader();
+    mpl->loadFirst();
+}
+
+UniverseScene::~UniverseScene()
+{
+    delete mpl;
 }
 
 void UniverseScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
