@@ -5,12 +5,15 @@ maploader::maploader(QObject *parent) :
     QObject(parent)
 {
     makeMapSymbols();
-    maps.setPath("./");
+    maps.setPath("/home/mifark/pathf/graphics/");
+    qDebug() << maps.dirName();
+    current = NULL;
 }
 
 maploader::~maploader()
 {
-    delete current;
+    if(!current)
+        delete current;
 }
 
 void maploader::makeMapSymbols()
@@ -27,7 +30,7 @@ void maploader::makeMapSymbols()
 void maploader::loadFirst()
 {
 
-    QStringList enList = maps.entryList();
+    QStringList enList = maps.entryList(QStringList("*.map"));
     current = new QFile(maps.filePath(enList.first()));
     current->open(QIODevice::ReadOnly);
     QTextStream str(current);
@@ -50,17 +53,25 @@ void maploader::processMap(QTextStream &str)
     {
         QList<int> list;
         for(int i=0;i<buffer.size();i++)
-        {
-            qDebug() << mapSymbols.key(QString(buffer[i]));
-            list.append(mapSymbols.key(QString(buffer[i])));
-        }
+            list.append(mapSymbols.key(QChar(buffer[i])));
         readedMap.append(list);
+        list.clear();
     }
 }
 
 QList<QList<int> > maploader::getMap()
 {
     return readedMap;
+}
+
+int maploader::getHeight()
+{
+    return mapHeight;
+}
+
+int maploader::getWidth()
+{
+    return mapWidth;
 }
 
 

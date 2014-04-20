@@ -8,13 +8,7 @@
 #include <QFile>
 #include <QTextStream>
 
-enum mapElements{
-    passable = 0,
-    trees,
-    swamp,
-    water,
-    outOfBounds
-};
+#include "names.h"
 
 class maploader : public QObject
 {
@@ -25,6 +19,8 @@ public:
     void loadFirst();
     void makeMapSymbols();
     QList<QList<int> > getMap();
+    int getWidth();
+    int getHeight();
 
 private:
     QMultiMap<mapElements,QString> mapSymbols;
