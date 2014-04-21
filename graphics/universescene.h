@@ -45,8 +45,8 @@ private:
     QList<CellItem> rcells;
     
     QRectF findCell(int row, int col);
-    QRectF findPointCell(int y, int x,int &posy, int &posx);
-    void graphToCell(int y,int x,int &posy, int &posx);
+    QRectF findPointCell(int crdy, int crdx,int &posy, int &posx);
+    void graphToCell(int crdy,int crdx,int &posy, int &posx);
     void setRect(cellTypes ctp,int col,int row);
     
     int pickColor(cellTypes tp);

@@ -100,24 +100,24 @@ QRectF UniverseScene::findCell(int row, int col)
     
 }
 
-QRectF UniverseScene::findPointCell(int y, int x, int &posy, int &posx)
+QRectF UniverseScene::findPointCell(int crdy, int crdx, int &posy, int &posx)
 {
-    graphToCell(y,x,posy,posx);
+    graphToCell(crdy,crdx,posy,posx);
 
     return findCell(posy,posx);
 }
 
-void UniverseScene::graphToCell(int y, int x, int &posy, int &posx)
+void UniverseScene::graphToCell(int crdy, int crdx, int &posy, int &posx)
 {
     for(posy=0;posy<hgrid.size();posy++)
-        if(y<hgrid[posy]->line().p1().y())
+        if(crdy<hgrid[posy]->line().p1().y())
         {
             posy--;
             break;
         }
 
     for(posx=0;posx<wgrid.size();posx++)
-        if(x<wgrid[posx]->line().p1().x())
+        if(crdx<wgrid[posx]->line().p1().x())
         {
             posx--;
             break;
@@ -177,7 +177,6 @@ void UniverseScene::gridToView(QList<QList<int> > &map)
                 setRect(empty,i,j);
             else
                 setRect(wall,i,j);
-
         }
     }
 }
@@ -185,9 +184,8 @@ void UniverseScene::gridToView(QList<QList<int> > &map)
 void UniverseScene::setRect(cellTypes ctp, int col, int row)
 {
     Qt::GlobalColor colr = (Qt::GlobalColor)(pickColor(ctp));
-    int icol,irow;
-    QRectF rect = findPointCell(col,row,icol,irow);
-    rcells.append(CellItem(this->addRect(rect,QPen(colr),QBrush(colr)),icol,irow));
+    QRectF rect = findCell(col,row);
+    rcells.append(CellItem(this->addRect(rect,QPen(colr),QBrush(colr)),col,row));
 
 }
 
