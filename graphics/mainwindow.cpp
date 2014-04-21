@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->clearGrid();
     scene->createGrid(ui->Universe->size().height(),ui->Universe->size().width());
     scene->gridToView();
-    ui->Universe->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->Universe->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->Universe->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->Universe->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     this->sizePolicy().setHeightForWidth(true);
     this->installEventFilter(this);
 //    update

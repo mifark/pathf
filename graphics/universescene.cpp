@@ -5,8 +5,8 @@ UniverseScene::UniverseScene(QObject *parent) :
     QGraphicsScene(parent)
 {
     mpl = new maploader();
-    wSize = 25;
-    hSize = 25;
+    wSize = 15;
+    hSize = 15;
 }
 
 UniverseScene::~UniverseScene()
@@ -57,7 +57,6 @@ void UniverseScene::createGrid(int width, int height)
         wgrid.append(this->addLine(i,0,i,h,QPen()));
     for(int i=0;i<=h;i+=lh)
         hgrid.append(this->addLine(0,i,w,i,QPen()));
-    qDebug() << wgrid.size() << " " << hgrid.size();
 }
 
 void UniverseScene::clearGrid()
@@ -76,7 +75,7 @@ void UniverseScene::reSetItems()
     for (int i = 0; i < rcells.size(); ++i) {
         int x = rcells[i].x;
         int y = rcells[i].y;
-        rct = findCell(x,y);
+        rct = findCell(y,x);
         rcells[i].item->setPen(QPen(rcells[i].item->pen().color()));
         rcells[i].item->setBrush(QBrush(rcells[i].item->brush().color()));
         rcells[i].item->setX(y);
