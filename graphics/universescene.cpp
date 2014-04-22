@@ -5,8 +5,8 @@ UniverseScene::UniverseScene(QObject *parent) :
     QGraphicsScene(parent)
 {
     mpl = new maploader();
-    wSize = 15;
-    hSize = 15;
+    kw = 40;
+    kh = 40;
 }
 
 UniverseScene::~UniverseScene()
@@ -23,20 +23,20 @@ void UniverseScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     int x,y;
     if(event->button() == Qt::RightButton)
     {
-        QRectF rect = findPointCell(event->scenePos().y(),event->scenePos().x(),y,x);
-        rcells.append(CellItem(this->addRect(rect,QPen(Qt::black),QBrush(Qt::black)),x,y));
+//        QRectF rect = findPointCell(event->scenePos().y(),event->scenePos().x(),y,x);
+//        urcells.append(CellItem(this->addRect(rect,QPen(Qt::black),QBrush(Qt::black)),x,y));
     }
     else if(event->button() == Qt::LeftButton)
     {
-        QRectF rect = findPointCell(event->scenePos().y(),event->scenePos().x(),y,x);
-        int pos;
-        if((pos = searchRect(rect)) != -1)
-        {
-            rcells[searchRect(rect)].item->setBrush(QBrush(Qt::white));
-            this->removeItem(rcells[searchRect(rect)].item);
-            rcells.removeAt(searchRect(rect));
-    //        rcells[1]->
-        }
+//        QRectF rect = findPointCell(event->scenePos().y(),event->scenePos().x(),y,x);
+//        int pos;
+//        if((pos = searchRect(rect)) != -1)
+//        {
+//            urcells[searchRect(rect)].item->setBrush(QBrush(Qt::white));
+//            this->removeItem(rcells[searchRect(rect)].item);
+//            urcells.removeAt(searchRect(rect));
+//    //        rcells[1]->
+//        }
 
 
     }
@@ -51,8 +51,8 @@ void UniverseScene::createGrid(int width, int height)
 {
     int w = width;
     int h = height;
-    int lw = ((double)w)/wSize;
-    int lh = ((double)h)/hSize;
+    int lw = ((double)w)/kw;
+    int lh = ((double)h)/kh;
     for(int i=0;i<=w;i+=lw)
         wgrid.append(this->addLine(i,0,i,h,QPen()));
     for(int i=0;i<=h;i+=lh)
@@ -75,11 +75,10 @@ void UniverseScene::reSetItems()
     for (int i = 0; i < rcells.size(); ++i) {
         int x = rcells[i].x;
         int y = rcells[i].y;
-        rct = findCell(y,x);
+        rct = findCell(x,y);
         rcells[i].item->setPen(QPen(rcells[i].item->pen().color()));
         rcells[i].item->setBrush(QBrush(rcells[i].item->brush().color()));
-        rcells[i].item->setX(y);
-        rcells[i].item->setY(x);
+        rcells[i].item->setRect(rct);
         rcells[i].x = x;
         rcells[i].y = y;
     }
@@ -148,9 +147,9 @@ int UniverseScene::pickColor(cellTypes tp)
 
 int UniverseScene::searchRect(QRectF rct)
 {
-    for(int i=0; i<rcells.size();i++)
+    for(int i=0; i<urcells.size();i++)
     {
-        if(rcells[i].item->rect().topLeft() == rct.topLeft())
+        if(urcells[i].item->rect().topLeft() == rct.topLeft())
             return i;
     }
     return -1;
@@ -159,8 +158,8 @@ int UniverseScene::searchRect(QRectF rct)
 void UniverseScene::mapToView()
 {
     mpl->loadFirst();
-    wSize = mpl->getWidth();
-    hSize = mpl->getHeight();
+    kw = mpl->getWidth();
+    kh = mpl->getHeight();
 //    createGrid (mpl->getWidth(),mpl->getHeight ());
  //   gridToView(map);
 }

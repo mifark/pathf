@@ -43,7 +43,8 @@ private:
     QList<QGraphicsLineItem *> hgrid;
     QList<QGraphicsLineItem *> wgrid;
     QList<CellItem> rcells;
-    
+    QList<CellItem> urcells;
+
     QRectF findCell(int row, int col);
     QRectF findPointCell(int crdy, int crdx,int &posy, int &posx);
     void graphToCell(int crdy,int crdx,int &posy, int &posx);
@@ -56,8 +57,8 @@ private:
 
     maploader *mpl;
 
-    unsigned int wSize;
-    unsigned int hSize;
+    unsigned int kw;
+    unsigned int kh;
     
 signals:
     

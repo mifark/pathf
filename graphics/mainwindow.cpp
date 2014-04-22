@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->show();
     scene->mapToView();
     scene->clearGrid();
-    scene->createGrid(ui->Universe->size().height(),ui->Universe->size().width());
+//    scene->createGrid(ui->Universe->size().height(),ui->Universe->size().width());
+    scene->createGrid(1000,1000);
     scene->gridToView();
     ui->Universe->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->Universe->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -38,7 +39,7 @@ bool MainWindow::eventFilter(QObject *, QEvent * ev)
     if(ev->type() == QEvent::Resize)
     {
         scene->clearGrid();
-        scene->createGrid(ui->Universe->size().height(),ui->Universe->size().width());
+        scene->createGrid(1000,1000);
         scene->reSetItems();
     }
 }
