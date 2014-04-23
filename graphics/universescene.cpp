@@ -5,8 +5,8 @@ UniverseScene::UniverseScene(QObject *parent) :
     QGraphicsScene(parent)
 {
     mpl = new maploader();
-    kw = 40;
-    kh = 40;
+//    kw = 20;
+//    kh = 20;
 }
 
 UniverseScene::~UniverseScene()
@@ -49,13 +49,15 @@ void UniverseScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void UniverseScene::createGrid(int width, int height)
 {
-    int w = width;
-    int h = height;
-    int lw = ((double)w)/kw;
-    int lh = ((double)h)/kh;
-    for(int i=0;i<=w;i+=lw)
+    double w = width;
+    double h = height;
+    double lw = w/((double)kw);
+    double lh = h/((double)kh);
+    qDebug() << "w = " << w << "kw = " << kw << "lw = " << lw;
+    qDebug() << "h = " << h << "kh = " << kh << "lh = " << lh;
+    for(double i=0;i<=w;i+=lw)
         wgrid.append(this->addLine(i,0,i,h,QPen()));
-    for(int i=0;i<=h;i+=lh)
+    for(double i=0;i<=h;i+=lh)
         hgrid.append(this->addLine(0,i,w,i,QPen()));
 }
 

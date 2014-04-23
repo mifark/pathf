@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMouseEvent>
 #include <QEvent>
+#define GRSIZE 3000
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,8 +17,9 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->mapToView();
     scene->clearGrid();
 //    scene->createGrid(ui->Universe->size().height(),ui->Universe->size().width());
-    scene->createGrid(1000,1000);
+    scene->createGrid(GRSIZE,GRSIZE);
     scene->gridToView();
+    scene->reSetItems();
     ui->Universe->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->Universe->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     this->sizePolicy().setHeightForWidth(true);
@@ -39,7 +41,7 @@ bool MainWindow::eventFilter(QObject *, QEvent * ev)
     if(ev->type() == QEvent::Resize)
     {
         scene->clearGrid();
-        scene->createGrid(1000,1000);
+        scene->createGrid(GRSIZE,GRSIZE);
         scene->reSetItems();
     }
 }
