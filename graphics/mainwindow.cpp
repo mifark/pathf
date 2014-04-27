@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMouseEvent>
 #include <QEvent>
+#include <QFileDialog>
 #define GRSIZE 3000
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -55,4 +56,10 @@ MainWindow::~MainWindow()
 {
     delete scene;
     delete ui;
+}
+
+void MainWindow::on_pbOpen_clicked()
+{
+    QString s = QFileDialog::getOpenFileName(this,trUtf8("OpenFile"),"./",tr("Maps (*.map)"));
+    sig_sendMapName(s);
 }

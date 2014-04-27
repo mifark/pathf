@@ -46,6 +46,25 @@ void maploader::loadFirst()
     }
 }
 
+void maploader::loadMap(QString s)
+{
+    current = new QFile(s);
+    current->open(QIODevice::ReadOnly);
+    QTextStream str(current);
+    str.readLine();
+    QString buf;
+    buf = str.readLine();
+    mapHeight = buf.split(" ").at(1).toInt();
+    buf = str.readLine();
+    mapWidth = buf.split(" ").at(1).toInt();
+    if(str.readLine()==QString("map"))
+    {
+       processMap(str);
+    }
+
+    emit sig_WdHt(mapWidth,mapHeight);
+}
+
 void maploader::processMap(QTextStream &str)
 {
     QString buffer;

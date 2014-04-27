@@ -31,9 +31,11 @@ private:
     int mapWidth;
 
     void processMap(QTextStream &str);
-    
+    void loadMap(QString s);
+
 
 signals:
+    void sig_WdHt(int mapWidth,int mapHeight);
 
 public slots:
 

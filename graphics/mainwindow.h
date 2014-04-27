@@ -29,9 +29,15 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     bool eventFilter(QObject *, QEvent *);
     
+private slots:
+    void on_pbOpen_clicked();
+
 private:
     Ui::MainWindow *ui;
     UniverseScene *scene;
+
+signals:
+    void sig_sendMapName(QString send);
     
     
 };

@@ -20,6 +20,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     universescene.h \
     maploader.h \
-    names.h
+    names.h \
+    nodes.h
 
 FORMS    += mainwindow.ui

@@ -63,6 +63,7 @@ private:
 signals:
     
 public slots:
+    void setWdHt(unsigned int kw, unsigned int kh);
     
 };
 
