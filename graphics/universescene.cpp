@@ -5,8 +5,8 @@ UniverseScene::UniverseScene(QObject *parent) :
     QGraphicsScene(parent)
 {
     mpl = new maploader();
-//    kw = 20;
-//    kh = 20;
+    kw = GRSIZE;
+    kh = GRSIZE;
     connect(mpl,SIGNAL(sig_WdHt(int,int)),this,SLOT(setWdHt(uint,uint)));
 }
 
@@ -47,6 +47,8 @@ void UniverseScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void UniverseScene::createGrid(int width, int height)
 {
+    if(kw==0)
+        qDebug() << "Null map error";
     double w = width;
     double h = height;
     double lw = w/((double)kw);
@@ -65,20 +67,21 @@ void UniverseScene::clearGrid()
         this->removeItem(wgrid[j]);
     wgrid.clear();
     hgrid.clear();
+    rcells.clear();
 }
 
 void UniverseScene::reSetItems()
 {
     QRectF rct;
     for (int i = 0; i < rcells.size(); ++i) {
-        int x = rcells[i].x;
-        int y = rcells[i].y;
+        int x = rcells[i].crd.x();
+        int y = rcells[i].crd.y();
         rct = findCell(x,y);
         rcells[i].item->setPen(QPen(rcells[i].item->pen().color()));
         rcells[i].item->setBrush(QBrush(rcells[i].item->brush().color()));
         rcells[i].item->setRect(rct);
-        rcells[i].x = x;
-        rcells[i].y = y;
+        rcells[i].crd.setX(x);
+        rcells[i].crd.setY(y);
     }
 
 }
@@ -191,8 +194,19 @@ void UniverseScene::gridToView()
     gridToView(map);
 }
 
-void UniverseScene::setWdHt(unsigned int kw, unsigned int kh)
+void UniverseScene::setWdHt(int kw, int kh)
 {
     this->kw =  kw;
     this->kh = kh;
+}
+
+void UniverseScene::launchMapLoader(QString mapname)
+{
+    clearGrid();
+    mpl->setMap(mapname);
+    mapToView();
+    createGrid(GRSIZE,GRSIZE);
+    gridToView();
+    reSetItems();
+
 }

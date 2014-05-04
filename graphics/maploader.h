@@ -7,8 +7,7 @@
 #include <QMap>
 #include <QFile>
 #include <QTextStream>
-
-#include "names.h"
+#include "nodes.h"
 
 class maploader : public QObject
 {
@@ -19,8 +18,11 @@ public:
     void loadFirst();
     void makeMapSymbols();
     QList<QList<int> > getMap();
+    QList<QList<WaveCell> > getMap();
+    QList<Nodes> getNodeList();
     int getWidth();
     int getHeight();
+    void setMap(QString mapname);
 
 private:
     QMultiMap<mapElements,QString> mapSymbols;

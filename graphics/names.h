@@ -6,7 +6,8 @@ enum mapElements{
     trees,
     swamp,
     water,
-    outOfBounds
+    outOfBounds,
+    way
 };
 
 enum cellTypes{

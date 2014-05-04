@@ -15,12 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     universescene.cpp \
-    maploader.cpp
+    maploader.cpp \
+    algorithms.cpp \
+    nodes.cpp
 
 HEADERS  += mainwindow.h \
     universescene.h \
     maploader.h \
     names.h \
-    nodes.h
+    nodes.h \
+    algorithms.h
 
 FORMS    += mainwindow.ui

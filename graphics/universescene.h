@@ -7,20 +7,11 @@
 #include <QGraphicsRectItem>
 
 #include "maploader.h"
+#include "algorithms.h"
 #include "names.h"
 
 #define GRID_SIZE 15
-struct CellItem{
-    QGraphicsRectItem *item;
-    int x;
-    int y;
-    CellItem(QGraphicsRectItem *item,int i, int j) :
-        item(item),
-        x(i),
-        y(j)
-    {
-    }
-};
+#define GRSIZE 3000
 
 class UniverseScene : public QGraphicsScene
 {
@@ -43,7 +34,6 @@ private:
     QList<QGraphicsLineItem *> hgrid;
     QList<QGraphicsLineItem *> wgrid;
     QList<CellItem> rcells;
-    QList<CellItem> urcells;
 
     QRectF findCell(int row, int col);
     QRectF findPointCell(int crdy, int crdx,int &posy, int &posx);
@@ -57,13 +47,14 @@ private:
 
     maploader *mpl;
 
-    unsigned int kw;
-    unsigned int kh;
+    int kw;
+    int kh;
     
 signals:
     
 public slots:
-    void setWdHt(unsigned int kw, unsigned int kh);
+    void setWdHt(int kw,int kh);
+    void launchMapLoader(QString mapname);
     
 };
 

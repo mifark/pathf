@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Universe->show();
     this->show();
     scene->mapToView();
-    scene->clearGrid();
+//    scene->clearGrid();
 //    scene->createGrid(ui->Universe->size().height(),ui->Universe->size().width());
     scene->createGrid(GRSIZE,GRSIZE);
     scene->gridToView();
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Universe->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     this->sizePolicy().setHeightForWidth(true);
     this->installEventFilter(this);
-//    update
+    connect(this,SIGNAL(sig_sendMapName(QString)),scene,SLOT(launchMapLoader(QString)));
 }
 
 
@@ -41,7 +41,7 @@ bool MainWindow::eventFilter(QObject *, QEvent * ev)
 {
     if(ev->type() == QEvent::Resize)
     {
-        scene->clearGrid();
+//        scene->clearGrid();
         scene->createGrid(GRSIZE,GRSIZE);
         scene->reSetItems();
     }
@@ -61,5 +61,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_pbOpen_clicked()
 {
     QString s = QFileDialog::getOpenFileName(this,trUtf8("OpenFile"),"./",tr("Maps (*.map)"));
-    sig_sendMapName(s);
+//    scene->createGrid(GRSIZE,GRSIZE);
+    emit sig_sendMapName(s);
 }

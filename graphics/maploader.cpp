@@ -1,4 +1,6 @@
 #include "maploader.h"
+#include "nodes.h"
+
 #include <QDebug>
 
 maploader::maploader(QObject *parent) :
@@ -29,7 +31,6 @@ void maploader::makeMapSymbols()
 
 void maploader::loadFirst()
 {
-
     QStringList enList = maps.entryList(QStringList("*.map"));
     current = new QFile(maps.filePath(enList.first()));
     current->open(QIODevice::ReadOnly);
@@ -65,9 +66,15 @@ void maploader::loadMap(QString s)
     emit sig_WdHt(mapWidth,mapHeight);
 }
 
+void maploader::setMap(QString mapname)
+{
+    loadMap(mapname);
+}
+
 void maploader::processMap(QTextStream &str)
 {
     QString buffer;
+    readedMap.clear();
     while(!(buffer = str.readLine()).isNull())
     {
         QList<int> list;
@@ -81,6 +88,15 @@ void maploader::processMap(QTextStream &str)
 QList<QList<int> > maploader::getMap()
 {
     return readedMap;
+}
+
+QList<QList<WaveCell> > maploader::getMap()
+{
+    QList<QList<WaveCell> > returnable;
+    for (int i = 0; i < readedMap.size(); ++i) {
+        returnable.append(readedMap[i]);
+    }
+    return returnable;
 }
 
 int maploader::getHeight()
