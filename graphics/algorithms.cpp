@@ -13,7 +13,7 @@ void PathAlgorithms::wavesearch()
         QList<QPoint> wave;
         oldWave.append(start);
         int step = 0;
-        map[start.x()][start.j].g = 0;
+        map[start.x()][start.y()].g = 0;
         while(oldWave.size()>0 || step!=-1)
         {
             ++step;
@@ -55,7 +55,7 @@ void PathAlgorithms::makePath()
         {
             int nx = x + dx[d];
             int ny = y + dy[d];
-            if (map[x][y] - 1 == map[nx][ny])
+            if (map[x][y].g - 1 == map[nx][ny].g)
             {
                 x = nx;
                 y = ny;
@@ -64,13 +64,9 @@ void PathAlgorithms::makePath()
             }
         }
     }
-
-
-
-
 }
 
-void PathAlgorithms::setMap(QList<QList<int> > map)
+void PathAlgorithms::setMap(QList<QList<WaveCell> > map)
 {
     this->map.clear();
     this->map.append(map);

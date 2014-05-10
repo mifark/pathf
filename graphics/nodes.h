@@ -3,12 +3,14 @@
 #include "names.h"
 #include <QGraphicsRectItem>
 
+class CellItem;
+
 struct WaveCell
 {
     cellTypes celtype; // тип клетки
     int g; // пусть с начала
 
-    const WaveCell &operator=(const cellType &right)
+    const WaveCell &operator=(const cellTypes &right)
     {
         this->celtype = right;
         g = 0;
@@ -44,7 +46,7 @@ class Node
        bool operator!=(const CellItem &) const;
 
        const Node &operator=(const Node &);
-       const Node &operator=(const Point &);
+       const Node &operator=(const QPoint &);
        const Node &operator=(const CellItem &);
 };
 

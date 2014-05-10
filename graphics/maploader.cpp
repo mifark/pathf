@@ -90,11 +90,15 @@ QList<QList<int> > maploader::getMap()
     return readedMap;
 }
 
-QList<QList<WaveCell> > maploader::getMap()
+QList<QList<WaveCell> > maploader::getWaveMap()
 {
     QList<QList<WaveCell> > returnable;
     for (int i = 0; i < readedMap.size(); ++i) {
-        returnable.append(readedMap[i]);
+        for(int j=0; j < readedMap[i].size(); ++j)
+        {
+            returnable[i].append(WaveCell());
+            returnable[i][j] = readedMap[i][j];
+        }
     }
     return returnable;
 }

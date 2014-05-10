@@ -48,7 +48,10 @@ void UniverseScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void UniverseScene::createGrid(int width, int height)
 {
     if(kw==0)
+    {
         qDebug() << "Null map error";
+        return;
+    }
     double w = width;
     double h = height;
     double lw = w/((double)kw);

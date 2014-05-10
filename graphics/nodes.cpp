@@ -17,23 +17,23 @@ Node::~Node()
 
 bool Node::operator==(const Node & right) const
 {
-   return crd == right.crd
+   return crd == right.crd;
 }
 
 // операция сравнения с узлами CellItem
 bool Node::operator==(const CellItem & right) const
 {
-   return crd == right.crd
+   return crd == right.crd;
 }
 
 bool Node::operator!=(const Node & right) const
 {
-    return ! *this == right;
+    return *this != right;
 }
 
 bool Node::operator!=(const CellItem & right) const
 {
-    return ! *this == right;
+    return *this != right;
 }
 
 const Node &Node::operator=(const Node & right)
@@ -48,22 +48,16 @@ const Node &Node::operator=(const Node & right)
 
 const Node &Node::operator=(const QPoint & right)
 {
-    if(&right != this)
-    {
-        this->crd = right.crd;
+        this->crd = right;
         this->child = NULL;
         this->parent = NULL;
-    }
 }
 
 const Node &Node::operator=(const CellItem & right)
 {
-    if(&right != this)
-    {
         this->crd = right.crd;
-        this->child = right.child;
-        this->parent = right.parent;
-    }
+        this->child = NULL;
+        this->parent = NULL;
 }
 //=====================================================================
 // CellItem
@@ -95,10 +89,10 @@ bool CellItem::operator==(const CellItem & right) const
 
 bool CellItem::operator!=(const Node & right) const
 {
-    return ! *this == right;
+    return *this != right;
 }
 
 bool CellItem::operator!=(const CellItem & right) const
 {
-    return ! *this == right;
+    return  *this != right;
 }

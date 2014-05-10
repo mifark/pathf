@@ -18,8 +18,8 @@ public:
     void loadFirst();
     void makeMapSymbols();
     QList<QList<int> > getMap();
-    QList<QList<WaveCell> > getMap();
-    QList<Nodes> getNodeList();
+    QList<QList<WaveCell> > getWaveMap();
+    QList<Node> getNodeList();
     int getWidth();
     int getHeight();
     void setMap(QString mapname);
