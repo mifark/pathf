@@ -24,6 +24,8 @@ public:
     void reSetItems();
     void mapToView();
     void gridToView();
+
+    void getMainPoints(QPoint &start, QPoint &stop);
     
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -48,8 +50,8 @@ private:
     maploader *mpl;
     PathAlgorithms *palgo;
 
-    QPointF start;
-    QPointF stop;
+    QPoint start;
+    QPoint stop;
     CellItem startMap;
     CellItem stopMap;
 

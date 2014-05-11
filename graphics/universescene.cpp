@@ -38,6 +38,7 @@ void UniverseScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             stopMap.item->setPen(QPen(this->pickColor(mpl->getSpecificCell(x,y) ? clNames::empty : clNames::wall )));
         }
         stopMap = CellItem(this->addRect(rect,QPen(Qt::red),QBrush(Qt::red)),(clNames::cellTypes)mpl->getSpecificCell(x,y),x,y);
+        stop = QPoint(x,y);
 
     }
     else if(event->button() == Qt::LeftButton)
@@ -52,13 +53,7 @@ void UniverseScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             startMap.item->setPen(QPen(this->pickColor(mpl->getSpecificCell(x,y) ? clNames::empty : clNames::wall )));
         }
         startMap = CellItem(this->addRect(rect,QPen(Qt::green),QBrush(Qt::green)),(clNames::cellTypes)mpl->getSpecificCell(x,y),x,y);
-//        int pos = searchRect(rect);
-//        if(pos!=-1)
-//        {
-//            rcells[searchRect(rect)].item->setBrush(QBrush(Qt::white));
-//            this->removeItem(rcells[searchRect(rect)].item);
-//            rcells.removeAt(searchRect(rect));
-//        }
+        start = QPoint(x,y);
     }
         
 }
@@ -242,10 +237,15 @@ void UniverseScene::launchMapLoader(QString mapname)
 void UniverseScene::setChoosedAlgo(QString algo)
 {
     palgo->setMap(mpl->getWaveMap());
-    palgo->setPoints(startMap.crd,stopMap.crd);
+    palgo->setPoints(start,stop);
     palgo->start_WaveSearch();
     QList<QPoint> point = palgo->getPath();
 
-//    palgo->setPoints();
+}
+
+void UniverseScene::getMainPoints(QPoint &start, QPoint &stop)
+{
+    start = startMap.crd;
+    stop = stopMap.crd;
 }
 

@@ -103,6 +103,7 @@ QList<QList<WaveCell> > maploader::getWaveMap()
 {
     QList<QList<WaveCell> > returnable;
     for (int i = 0; i < readedMap.size(); ++i) {
+        returnable.append(QList<WaveCell>());
         for(int j=0; j < readedMap[i].size(); ++j)
         {
             returnable[i].append(WaveCell());

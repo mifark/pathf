@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->sizePolicy().setHeightForWidth(true);
     this->installEventFilter(this);
     connect(this,SIGNAL(sig_sendMapName(QString)),scene,SLOT(launchMapLoader(QString)));
+    connect(this,SIGNAL(sig_sendAlgoName(QString)),scene,SLOT(setChoosedAlgo(QString)));
 
    ui->cbAlgo->addItem(trUtf8("Wave"));
 
@@ -66,4 +67,10 @@ void MainWindow::on_pbOpen_clicked()
     QString s = QFileDialog::getOpenFileName(this,trUtf8("OpenFile"),"./",tr("Maps (*.map)"));
 //    scene->createGrid(GRSIZE,GRSIZE);
     emit sig_sendMapName(s);
+}
+
+void MainWindow::on_pbTask_clicked()
+{
+    emit sig_sendAlgoName(ui->cbAlgo->currentText());
+
 }

@@ -24,13 +24,14 @@ void PathAlgorithms::start_WaveSearch()
                 {
                     int nx = i->x() + dx[d];
                     int ny = i->y() + dy[d];
-                    if(map[nx][ny].celtype == clNames::empty || map[nx][ny].celtype == clNames::stop)
+                    if(map[nx][ny].celtype != clNames::wall)
                     {
                         wave.push_back(QPoint(nx,ny));
                         map[nx][ny].g = step;
                         if(nx==goal.x() && ny==goal.y())
                         {
                             oldWave.clear();
+                            wave.clear();
                             step = -1;
                             break;
                         }

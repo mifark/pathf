@@ -32,12 +32,15 @@ protected:
 private slots:
     void on_pbOpen_clicked();
 
+    void on_pbTask_clicked();
+
 private:
     Ui::MainWindow *ui;
     UniverseScene *scene;
 
 signals:
     void sig_sendMapName(QString send);
+    void sig_sendAlgoName(QString send);
     
     
 };
