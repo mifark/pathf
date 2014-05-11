@@ -7,17 +7,17 @@ class CellItem;
 
 struct WaveCell
 {
-    cellTypes celtype; // тип клетки
+    clNames::cellTypes celtype; // тип клетки
     int g; // пусть с начала
 
-    const WaveCell &operator=(const cellTypes &right)
+    const WaveCell &operator=(const clNames::cellTypes &right)
     {
         this->celtype = right;
         g = 0;
     }
     const WaveCell &operator=(const int &right)
     {
-        this->celtype = (cellTypes) right;
+        this->celtype = (clNames::cellTypes) right;
         g = 0;
     }
 };
@@ -54,8 +54,10 @@ class CellItem
 {
     public:
         QGraphicsRectItem *item;
-        CellItem(QGraphicsRectItem *item,int i, int j);
+        CellItem();
+        CellItem(QGraphicsRectItem *item,clNames::cellTypes type, int i, int j);
         QPoint crd;
+        clNames::cellTypes celtype; // тип клетки
 
         // операция сравнения с узлами Node
        bool operator==(const Node &) const;

@@ -5,7 +5,7 @@ PathAlgorithms::PathAlgorithms()
 
 }
 
-void PathAlgorithms::wavesearch()
+void PathAlgorithms::start_WaveSearch()
 {
     if(map.size()!=0)
     {
@@ -24,7 +24,7 @@ void PathAlgorithms::wavesearch()
                 {
                     int nx = i->x() + dx[d];
                     int ny = i->y() + dy[d];
-                    if(map[nx][ny].celtype == empty || map[nx][ny].celtype == stop)
+                    if(map[nx][ny].celtype == clNames::empty || map[nx][ny].celtype == clNames::stop)
                     {
                         wave.push_back(QPoint(nx,ny));
                         map[nx][ny].g = step;
@@ -76,4 +76,9 @@ void PathAlgorithms::setPoints(QPoint start, QPoint goal)
 {
     this->start = start;
     this->goal = goal;
+}
+
+QList<QPoint> PathAlgorithms::getPath()
+{
+    return returnPath;
 }

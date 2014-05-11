@@ -38,14 +38,21 @@ private:
     QRectF findCell(int row, int col);
     QRectF findPointCell(int crdy, int crdx,int &posy, int &posx);
     void graphToCell(int crdy,int crdx,int &posy, int &posx);
-    void setRect(cellTypes ctp,int col,int row);
+    void setRect(clNames::cellTypes ctp,int col,int row);
     
-    int pickColor(cellTypes tp);
+    int pickColor(clNames::cellTypes);
 
     int searchRect(QRectF rct);
     void gridToView(QList<QList<int> > &map);
 
     maploader *mpl;
+    PathAlgorithms *palgo;
+
+    QPointF start;
+    QPointF stop;
+    CellItem startMap;
+    CellItem stopMap;
+
 
     int kw;
     int kh;
@@ -55,6 +62,8 @@ signals:
 public slots:
     void setWdHt(int kw,int kh);
     void launchMapLoader(QString mapname);
+
+    void setChoosedAlgo(QString algo);
     
 };
 

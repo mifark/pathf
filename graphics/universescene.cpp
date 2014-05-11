@@ -1,18 +1,21 @@
 #include "universescene.h"
+#include <QGraphicsScene>
 #include <QDebug>
 
 UniverseScene::UniverseScene(QObject *parent) :
     QGraphicsScene(parent)
 {
     mpl = new maploader();
+    palgo = new PathAlgorithms();
     kw = GRSIZE;
     kh = GRSIZE;
-    connect(mpl,SIGNAL(sig_WdHt(int,int)),this,SLOT(setWdHt(uint,uint)));
+    connect(mpl,SIGNAL(sig_WdHt(int,int)),this,SLOT(setWdHt(int,int)));
 }
 
 UniverseScene::~UniverseScene()
 {
     delete mpl;
+    delete palgo;
 }
 
 void UniverseScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -25,18 +28,37 @@ void UniverseScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::RightButton)
     {
         QRectF rect = findPointCell(event->scenePos().y(),event->scenePos().x(),y,x);
-        rcells.append(CellItem(this->addRect(rect,QPen(Qt::black),QBrush(Qt::black)),x,y));
+//        rcells.append(CellItem(this->addRect(rect,QPen(Qt::black),QBrush(Qt::black)),x,y));
+
+        if(stopMap.item!=NULL)
+        {
+            delete stopMap.item;
+            stopMap.item = new QGraphicsRectItem();
+            stopMap.item->setBrush(QBrush(this->pickColor(mpl->getSpecificCell(x,y) ?clNames::empty : clNames::wall )));
+            stopMap.item->setPen(QPen(this->pickColor(mpl->getSpecificCell(x,y) ? clNames::empty : clNames::wall )));
+        }
+        stopMap = CellItem(this->addRect(rect,QPen(Qt::red),QBrush(Qt::red)),(clNames::cellTypes)mpl->getSpecificCell(x,y),x,y);
+
     }
     else if(event->button() == Qt::LeftButton)
     {
         QRectF rect = findPointCell(event->scenePos().y(),event->scenePos().x(),y,x);
-        int pos = searchRect(rect);
-        if(pos!=-1)
+
+        if(startMap.item!=NULL)
         {
-            rcells[searchRect(rect)].item->setBrush(QBrush(Qt::white));
-            this->removeItem(rcells[searchRect(rect)].item);
-            rcells.removeAt(searchRect(rect));
+            delete startMap.item;
+            startMap.item = new QGraphicsRectItem();
+            startMap.item->setBrush(QBrush(this->pickColor(mpl->getSpecificCell(x,y) ?clNames::empty : clNames::wall )));
+            startMap.item->setPen(QPen(this->pickColor(mpl->getSpecificCell(x,y) ? clNames::empty : clNames::wall )));
         }
+        startMap = CellItem(this->addRect(rect,QPen(Qt::green),QBrush(Qt::green)),(clNames::cellTypes)mpl->getSpecificCell(x,y),x,y);
+//        int pos = searchRect(rect);
+//        if(pos!=-1)
+//        {
+//            rcells[searchRect(rect)].item->setBrush(QBrush(Qt::white));
+//            this->removeItem(rcells[searchRect(rect)].item);
+//            rcells.removeAt(searchRect(rect));
+//        }
     }
         
 }
@@ -70,13 +92,15 @@ void UniverseScene::clearGrid()
         this->removeItem(wgrid[j]);
     wgrid.clear();
     hgrid.clear();
-    rcells.clear();
+//    rcells.clear();
 }
 
 void UniverseScene::reSetItems()
 {
+    /*
     QRectF rct;
-    for (int i = 0; i < rcells.size(); ++i) {
+    for (int i = 0; i < rcells.size(); ++i)
+    {
         int x = rcells[i].crd.x();
         int y = rcells[i].crd.y();
         rct = findCell(x,y);
@@ -86,6 +110,7 @@ void UniverseScene::reSetItems()
         rcells[i].crd.setX(x);
         rcells[i].crd.setY(y);
     }
+    */
 
 }
 
@@ -127,23 +152,23 @@ void UniverseScene::graphToCell(int crdy, int crdx, int &posy, int &posx)
 
 }
 
-int UniverseScene::pickColor(cellTypes tp)
+int UniverseScene::pickColor(clNames::cellTypes tp)
 {
     switch (tp) {
-        case empty:
+        case clNames::empty:
             return Qt::white;
             break;
-        case start:
+        case clNames::start:
             return Qt::green;
             break;
-        case stop:
+        case clNames::stop:
             return Qt::red;
             break;
-        case wall:
+        case clNames::wall:
             return Qt::gray;
             break;
         default:
-            return Qt::black;
+            return Qt::gray;
             break;
     }
 }
@@ -175,19 +200,19 @@ void UniverseScene::gridToView(QList<QList<int> > &map)
         QList<int> &col  = map[i];
         for(int j=0;j<col.size();j++)
         {
-            if(col[j]==empty)
-                setRect(empty,i,j);
+            if(col[j]==clNames::empty)
+                setRect(clNames::empty,i,j);
             else
-                setRect(wall,i,j);
+                setRect(clNames::wall,i,j);
         }
     }
 }
 
-void UniverseScene::setRect(cellTypes ctp, int col, int row)
+void UniverseScene::setRect(clNames::cellTypes ctp, int col, int row)
 {
     Qt::GlobalColor colr = (Qt::GlobalColor)(pickColor(ctp));
     QRectF rect = findCell(col,row);
-    rcells.append(CellItem(this->addRect(rect,QPen(colr),QBrush(colr)),col,row));
+    rcells.append(CellItem(this->addRect(rect,QPen(colr),QBrush(colr)),ctp,col,row));
 
 }
 
@@ -213,3 +238,14 @@ void UniverseScene::launchMapLoader(QString mapname)
     reSetItems();
 
 }
+
+void UniverseScene::setChoosedAlgo(QString algo)
+{
+    palgo->setMap(mpl->getWaveMap());
+    palgo->setPoints(startMap.crd,stopMap.crd);
+    palgo->start_WaveSearch();
+    QList<QPoint> point = palgo->getPath();
+
+//    palgo->setPoints();
+}
+

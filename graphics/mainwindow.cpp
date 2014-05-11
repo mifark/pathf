@@ -26,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->sizePolicy().setHeightForWidth(true);
     this->installEventFilter(this);
     connect(this,SIGNAL(sig_sendMapName(QString)),scene,SLOT(launchMapLoader(QString)));
+
+   ui->cbAlgo->addItem(trUtf8("Wave"));
+
 }
 
 

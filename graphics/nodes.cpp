@@ -63,11 +63,16 @@ const Node &Node::operator=(const CellItem & right)
 // CellItem
 //=====================================================================
 
-CellItem::CellItem(QGraphicsRectItem *item,int i, int j) :
+CellItem::CellItem(QGraphicsRectItem *item, clNames::cellTypes type, int i, int j):
     item(item),
+    celtype(type),
     crd(QPoint(i,j))
 {}
 
+CellItem::CellItem():
+    item(NULL),
+    crd(QPoint())
+{}
 
 // операция сравнения с узлами Node
 bool CellItem::operator==(const Node & right) const

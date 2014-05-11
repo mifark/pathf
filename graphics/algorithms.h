@@ -16,7 +16,7 @@ class PathAlgorithms
         void setMap(QList<QList<WaveCell> > map);
         void setPoints(QPoint start, QPoint goal);
 
-        void wavesearch();
+        void start_WaveSearch();
         void makePath();
        QList<QPoint> getPath();
 

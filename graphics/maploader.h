@@ -18,6 +18,7 @@ public:
     void loadFirst();
     void makeMapSymbols();
     QList<QList<int> > getMap();
+    int getSpecificCell(int x, int y);
     QList<QList<WaveCell> > getWaveMap();
     QList<Node> getNodeList();
     int getWidth();
@@ -25,7 +26,7 @@ public:
     void setMap(QString mapname);
 
 private:
-    QMultiMap<mapElements,QString> mapSymbols;
+    QMultiMap<clNames::mapElements,QString> mapSymbols;
     QDir maps;
     QFile *current;
     QList<QList<int> > readedMap;

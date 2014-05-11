@@ -20,13 +20,13 @@ maploader::~maploader()
 
 void maploader::makeMapSymbols()
 {
-    mapSymbols.insert(passable,".");
-    mapSymbols.insert(passable,"G");
-    mapSymbols.insert(outOfBounds,"@");
-    mapSymbols.insert(outOfBounds,"O");
-    mapSymbols.insert(trees,"T");
-    mapSymbols.insert(swamp,"S");
-    mapSymbols.insert(water,"W");
+    mapSymbols.insert(clNames::passable,".");
+    mapSymbols.insert(clNames::passable,"G");
+    mapSymbols.insert(clNames::outOfBounds,"@");
+    mapSymbols.insert(clNames::outOfBounds,"O");
+    mapSymbols.insert(clNames::trees,"T");
+    mapSymbols.insert(clNames::swamp,"S");
+    mapSymbols.insert(clNames::water,"W");
 }
 
 void maploader::loadFirst()
@@ -88,6 +88,15 @@ void maploader::processMap(QTextStream &str)
 QList<QList<int> > maploader::getMap()
 {
     return readedMap;
+}
+
+int maploader::getSpecificCell(int x, int y)
+{
+    int j = readedMap[x][y];
+    if(!readedMap.isEmpty())
+        return readedMap[x][y];
+    else
+        return -1;
 }
 
 QList<QList<WaveCell> > maploader::getWaveMap()
