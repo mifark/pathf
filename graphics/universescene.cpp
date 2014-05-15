@@ -10,6 +10,7 @@ UniverseScene::UniverseScene(QObject *parent) :
     kw = GRSIZE;
     kh = GRSIZE;
     connect(mpl,SIGNAL(sig_WdHt(int,int)),this,SLOT(setWdHt(int,int)));
+    connect(palgo,SIGNAL(sig_wavePoints(QList<QPoint>)),this,SLOT(setAlgoPoints(QList<QPoint>)));
 }
 
 UniverseScene::~UniverseScene()
@@ -162,6 +163,9 @@ int UniverseScene::pickColor(clNames::cellTypes tp)
         case clNames::wall:
             return Qt::gray;
             break;
+        case clNames::wave:
+            return Qt::blue;
+            break;
         default:
             return Qt::gray;
             break;
@@ -208,7 +212,13 @@ void UniverseScene::setRect(clNames::cellTypes ctp, int col, int row)
     Qt::GlobalColor colr = (Qt::GlobalColor)(pickColor(ctp));
     QRectF rect = findCell(col,row);
     rcells.append(CellItem(this->addRect(rect,QPen(colr),QBrush(colr)),ctp,col,row));
+}
 
+void UniverseScene::setRectContainer(clNames::cellTypes ctp, QList<CellItem> &container, int col, int row)
+{
+    Qt::GlobalColor colr = (Qt::GlobalColor)(pickColor(ctp));
+    QRectF rect = findCell(col,row);
+    container.append(CellItem(this->addRect(rect,QPen(colr),QBrush(colr)),ctp,col,row));
 }
 
 void UniverseScene::gridToView()
@@ -236,6 +246,7 @@ void UniverseScene::launchMapLoader(QString mapname)
 
 void UniverseScene::setChoosedAlgo(QString algo)
 {
+    wcells.clear();
     palgo->setMap(mpl->getWaveMap());
     palgo->setPoints(start,stop);
     palgo->start_WaveSearch();
@@ -247,5 +258,13 @@ void UniverseScene::getMainPoints(QPoint &start, QPoint &stop)
 {
     start = startMap.crd;
     stop = stopMap.crd;
+}
+
+void UniverseScene::setAlgoPoints(QList<QPoint> wave)
+{
+    for(int i=0; i<wave.size(); i++)
+    {
+        setRectContainer(clNames::wave,wcells,wave[i].x(),wave[i].y());
+    }
 }
 

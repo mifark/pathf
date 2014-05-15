@@ -36,11 +36,13 @@ private:
     QList<QGraphicsLineItem *> hgrid;
     QList<QGraphicsLineItem *> wgrid;
     QList<CellItem> rcells;
+    QList<CellItem> wcells;
 
     QRectF findCell(int row, int col);
     QRectF findPointCell(int crdy, int crdx,int &posy, int &posx);
     void graphToCell(int crdy,int crdx,int &posy, int &posx);
     void setRect(clNames::cellTypes ctp,int col,int row);
+    void setRectContainer(clNames::cellTypes ctp,QList<CellItem> &container,int col, int row);
     
     int pickColor(clNames::cellTypes);
 
@@ -66,6 +68,8 @@ public slots:
     void launchMapLoader(QString mapname);
 
     void setChoosedAlgo(QString algo);
+
+    void setAlgoPoints(QList<QPoint> wave);
     
 };
 

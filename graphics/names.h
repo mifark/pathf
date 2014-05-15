@@ -16,7 +16,8 @@ namespace clNames
         empty = 0,
         start = 1,
         stop = 2,
-        wall = 3
+        wall = 3,
+        wave = 100
     };
 }
 

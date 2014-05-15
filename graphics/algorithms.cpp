@@ -1,6 +1,7 @@
 #include "algorithms.h"
 
-PathAlgorithms::PathAlgorithms()
+PathAlgorithms::PathAlgorithms(QObject *parent) :
+    QObject(parent)
 {
 
 }
@@ -38,6 +39,7 @@ void PathAlgorithms::start_WaveSearch()
                     }
                 }
             }
+            emit sig_wavePoints(wave);
             oldWave = wave;
         }
     }
